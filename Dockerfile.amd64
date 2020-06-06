@@ -1,4 +1,4 @@
-FROM amd64/php:7.3-apache
+FROM amd64/php:7.4-apache
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Install stuff Firefly III runs with & depends on: php extensions, locales, dev headers and composer
