@@ -20,10 +20,14 @@ RUN a2enmod rewrite && a2enmod ssl && \
     sed -i 's/max_execution_time = 30/max_execution_time = 600/' /usr/local/etc/php/php.ini && \
     sed -i 's/memory_limit = 128M/memory_limit = 512M/' /usr/local/etc/php/php.ini && \
     sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 64M/' /usr/local/etc/php/php.ini && \
-    sed -i 's/post_max_size = 8M/post_max_size = 64M/' /usr/local/etc/php/php.ini
+    sed -i 's/post_max_size = 8M/post_max_size = 64M/' /usr/local/etc/php/php.ini && \
+    chgrp www-data /var/log/apache2 && \
+    ln -svf /dev/stderr /var/log/apache2/error.log && \
+    ln -svf /dev/stdout /var/log/apache2/access.log
 
 COPY [ "./cacert.pem", "/usr/local/ssl/cert.pem" ]
 COPY [ "./apache2.conf", "/etc/apache2/apache2.conf" ]
+COPY [ "./apache2-ports.conf", "/etc/apache2/ports.conf" ]
 
 # Enable default site (Firefly III)
 COPY ./apache-firefly-iii.conf /etc/apache2/sites-available/000-default.conf
